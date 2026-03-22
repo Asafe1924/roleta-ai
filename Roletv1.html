@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roleta IA</title>
+</head>
+<body>
+  <h1>🎯 Roleta IA Profissional</h1>
+
+  <input type="number" id="numero" placeholder="Digite número" />
+  <button onclick="enviar()">Enviar</button>
+
+  <h2>Histórico</h2>
+  <div id="historico"></div>
+
+  <h2>Previsão</h2>
+  <div id="previsao"></div>
+
+<script>
+async function enviar() {
+  const numero = document.getElementById("numero").value;
+
+  const res = await fetch("/numero", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ numero })
+  });
+
+  const data = await res.json();
+  atualizar(data);
+}
+
+function atualizar(data) {
+  document.getElementById("historico").innerText = data.historico.join(", ");
+  document.getElementById("previsao").innerText = data.previsao;
+}
+</script>
+
+</body>
+</html>
